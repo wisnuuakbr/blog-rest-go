@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 
 	"github.com/wisnuuakbr/blog-rest-go/config"
@@ -14,24 +15,23 @@ func init() {
 }
 
 func main() {
-	err := initializers.DB.Migrator().DropTable(models.User{})
+	err := initializers.DB.Migrator().DropTable(models.User{}, models.Post{})
 	if err != nil {
 		log.Fatal("Table dropping failed", err)
 	}
 
-	err = initializers.DB.AutoMigrate(models.User{})
+	err = initializers.DB.AutoMigrate(models.User{}, models.Post{})
 	if err != nil {
 		log.Fatal("Migration failed", err)
 	}
 
-	// Check if the table exists after migration
-	if !initializers.DB.Migrator().HasTable(&models.User{}) {
-		log.Fatal("Table not found after migration")
-	}
-
-	log.Println("Migration completed successfully")
-
 	// Don't forget to close the database connection when done
-	sqlDB, _ := initializers.DB.DB()
+	sqlDB, err := initializers.DB.DB()
+	if err != nil {
+		log.Fatal("Failed to get the database connection", err)
+	}
 	defer sqlDB.Close()
+
+	// Print a success message
+	fmt.Println("Migration successful!")
 }

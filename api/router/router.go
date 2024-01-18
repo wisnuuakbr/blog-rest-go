@@ -12,6 +12,7 @@ func GetRouter(r *gin.Engine) {
 	r.POST("/api/login", controllers.Login)
 	r.Use(middleware.RequireAuth)
 	r.POST("/api/logout", controllers.Logout)
+
 	userRouter := r.Group("/api/users")
 	{
 		userRouter.GET("/", controllers.GetUsers)
@@ -21,4 +22,15 @@ func GetRouter(r *gin.Engine) {
 		userRouter.GET("/all-trash", controllers.GetTrashedUsers)
 		userRouter.DELETE("/delete-permanent/:id", controllers.PermanentDelete)
 	}
+
+	// Post routes
+	postRouter := r.Group("/api/posts")
+	{
+		postRouter.GET("/", controllers.GetPost)
+		postRouter.POST("/create", controllers.CreatePost)
+		postRouter.GET("/:id/show", controllers.ShowPost)
+		postRouter.PUT("/:id/update", controllers.UpdatePost)
+		postRouter.DELETE("/:id/delete", controllers.DeletePost)
+	}
+
 }

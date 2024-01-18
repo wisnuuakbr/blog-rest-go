@@ -147,10 +147,20 @@ func GetUsers(c *gin.Context) {
 	var users []models.User
 
 	pageStr := c.DefaultQuery("page", "1")
-	page, _ := strconv.Atoi(pageStr)
+	page, err := strconv.Atoi(pageStr)
+	if err != nil || page < 1 {
+		// Handle invalid page parameter
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid page parameter"})
+		return
+	}
 
 	perPageStr := c.DefaultQuery("perPage", "5")
-	perPage, _ := strconv.Atoi(perPageStr)
+	perPage, err := strconv.Atoi(perPageStr)
+	if err != nil || perPage < 1 {
+		// Handle invalid perPage parameter
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid perPage parameter"})
+		return
+	}
 
 	result, err := pagination.Paginate(initializers.DB, page, perPage, nil, &users)
 	if err != nil {
@@ -263,10 +273,20 @@ func GetTrashedUsers(c *gin.Context) {
 	var users []models.User
 
 	pageStr := c.DefaultQuery("page", "1")
-	page, _ := strconv.Atoi(pageStr)
+	page, err := strconv.Atoi(pageStr)
+	if err != nil || page < 1 {
+		// Handle invalid page parameter
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid page parameter"})
+		return
+	}
 
 	perPageStr := c.DefaultQuery("perPage", "5")
-	perPage, _ := strconv.Atoi(perPageStr)
+	perPage, err := strconv.Atoi(perPageStr)
+	if err != nil || perPage < 1 {
+		// Handle invalid perPage parameter
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid perPage parameter"})
+		return
+	}
 
 	result, err := pagination.Paginate(initializers.DB.Unscoped().Where("deleted_at IS NOT NULL"), page, perPage, nil, &users)
 	if err != nil {
