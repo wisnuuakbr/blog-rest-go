@@ -113,8 +113,8 @@ func Login(c *gin.Context) {
 		"exp": time.Now().Add(time.Hour * 24 * 30).Unix(),
 	})
 
-	// Sign in and get the complete encoded token as a string using the .env secret
-	tokenString, err := token.SignedString([]byte(os.Getenv("SECRET")))
+	// Sign in and get the complete encoded token as a string using the .env secret_key
+	tokenString, err := token.SignedString([]byte(os.Getenv("SECRET_KEY")))
 
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
