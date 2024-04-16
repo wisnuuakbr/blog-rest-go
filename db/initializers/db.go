@@ -19,6 +19,15 @@ type DBConfig struct {
 	DBName   string
 }
 
+// convert string to int
+func portConv(s string) int {
+	port, err := strconv.Atoi(s)
+	if err != nil {
+		panic(err)
+	}
+	return port
+}
+
 func buildDBConfig() *DBConfig {
 	return &DBConfig{
 		Host:     os.Getenv("DB_HOST"),
@@ -29,14 +38,7 @@ func buildDBConfig() *DBConfig {
 	}
 }
 
-// convert string to int
-func portConv(s string) int {
-	port, err := strconv.Atoi(s)
-	if err != nil {
-		panic(err)
-	}
-	return port
-}
+
 
 func dbURL(dbConfig *DBConfig) string {
 	return fmt.Sprintf(

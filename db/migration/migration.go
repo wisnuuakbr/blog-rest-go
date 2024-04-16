@@ -15,12 +15,12 @@ func init() {
 }
 
 func main() {
-	err := initializers.DB.Migrator().DropTable(models.User{}, models.Post{})
+	err := initializers.DB.Migrator().DropTable(models.User{}, models.Post{}, models.Category{})
 	if err != nil {
 		log.Fatal("Table dropping failed", err)
 	}
 
-	err = initializers.DB.AutoMigrate(models.User{}, models.Post{})
+	err = initializers.DB.AutoMigrate(models.User{}, models.Post{}, models.Category{})
 	if err != nil {
 		log.Fatal("Migration failed", err)
 	}
