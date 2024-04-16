@@ -56,9 +56,9 @@ func RequireAuth(c *gin.Context) {
 		}
 
 		authUser := AuthUser {
-			ID:	user.ID,
+			ID:		user.ID,
 			Name:	user.Name,
-			Email: user.Email,
+			Email: 	user.Email,
 		}
 		// attach user to request
 		c.Set("authUser", authUser)
