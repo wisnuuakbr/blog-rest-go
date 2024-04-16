@@ -1,6 +1,6 @@
 # Simple Blog RestAPI using Golang
 
-simple RestAPI with
+Building simple blog app with go, gin, gorm, and postgresql
 
 ## Requirements
 
