@@ -33,4 +33,10 @@ func GetRouter(r *gin.Engine) {
 		postRouter.DELETE("/:id/delete", controllers.DeletePost)
 	}
 
+	// Category routes
+	categoryRouter := r.Group("/api/categories")
+	{
+		categoryRouter.POST("/create", controllers.CreateCategory)
+	}
+
 }
