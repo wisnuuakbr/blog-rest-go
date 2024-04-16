@@ -15,7 +15,9 @@ func init() {
 }
 
 func main() {
-	fmt.Println("Hello Auth")
+	fmt.Println("Hello Bro!")
+	// set releaseMode for production
+	gin.SetMode(gin.ReleaseMode)
 	r := gin.Default()
 	router.GetRouter(r)
 
