@@ -21,6 +21,7 @@ func CreatePost(c *gin.Context) {
 	var userInput struct{
 		Title      string `json:"title" binding:"required,min=2,max=200"`
 		Body       string `json:"body" binding:"required"`
+		CategoryId uint   `json:"category_id" binding:"required,min=1"`
 	}
 
 	if err := c.ShouldBindJSON(&userInput); err != nil {
@@ -35,12 +36,23 @@ func CreatePost(c *gin.Context) {
 		})
 	}
 
+	if !validations.IsExistValue("categories", "id", userInput.CategoryId) {
+		c.JSON(http.StatusUnprocessableEntity, gin.H{
+			"validations": map[string]interface{}{
+				"CategoryId": "The category does not exist!",
+			},
+		})
+
+		return
+	}
+
 	// Create a post
 	authID := helpers.GetAuthUser(c).ID
 
 	post := models.Post{
 		Title:      userInput.Title,
 		Body:       userInput.Body,
+		CategoryID: userInput.CategoryId,
 		UserID:     authID,
 	}
 

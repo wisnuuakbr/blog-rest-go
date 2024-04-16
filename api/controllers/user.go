@@ -58,9 +58,9 @@ func Register(c *gin.Context) {
 	}
 
 	user := models.User{
-		Name: userInput.Name,
-		Email: userInput.Email,
-		Password: string(hashPassword),
+		Name: 		userInput.Name,
+		Email: 		userInput.Email,
+		Password: 	string(hashPassword),
 	}
 
 	result := initializers.DB.Create(&user)
