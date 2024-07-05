@@ -2,6 +2,8 @@
 
 Building simple blog app with go, gin, gorm, and postgresql
 
+NB: This project currently still on progress
+
 ## Requirements
 
 Simple RestAPI is currently extended with the following requirements.  
